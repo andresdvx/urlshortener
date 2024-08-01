@@ -16,4 +16,25 @@ export class UrlService {
       },
     });
   }
+
+  async GetAllUrlsService(): Promise<Url[]> {
+    return await this.prismaService.url.findMany();
+  }
+
+  async EditUrlService(urlId: string, data: Url): Promise<Url> {
+    return await this.prismaService.url.update({
+      where: {
+        urlId,
+      },
+      data,
+    });
+  }
+
+  async DeleteUrlService(urlId: string): Promise<Url> {
+    return await this.prismaService.url.delete({
+      where: {
+        urlId,
+      },
+    });
+  }
 }
