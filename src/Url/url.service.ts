@@ -1,16 +1,17 @@
 import { PrismaService } from "../common/Prisma.service";
 import { Url } from "@prisma/client";
+
 export class UrlService {
   constructor(private readonly prismaService: PrismaService) {}
 
   async CreateUrlService(data: Url): Promise<Url> {
-    return await this.prismaService.url.create({
+    return this.prismaService.url.create({
       data,
     });
   }
 
   async GetUrlService(urlId: string): Promise<Url | null> {
-    return await this.prismaService.url.findUnique({
+    return this.prismaService.url.findUnique({
       where: {
         urlId,
       },
@@ -18,11 +19,11 @@ export class UrlService {
   }
 
   async GetAllUrlsService(): Promise<Url[]> {
-    return await this.prismaService.url.findMany();
+    return this.prismaService.url.findMany();
   }
 
-  async EditUrlService(urlId: string, data: Url): Promise<Url> {
-    return await this.prismaService.url.update({
+  async EditUrlService(urlId: string, data: Partial<Url>): Promise<Url> {
+    return this.prismaService.url.update({
       where: {
         urlId,
       },
@@ -31,7 +32,7 @@ export class UrlService {
   }
 
   async DeleteUrlService(urlId: string): Promise<Url> {
-    return await this.prismaService.url.delete({
+    return this.prismaService.url.delete({
       where: {
         urlId,
       },

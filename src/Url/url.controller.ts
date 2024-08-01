@@ -1,4 +1,5 @@
 import { UrlService } from "./url.service";
+import { Url } from "@prisma/client";
 import { Application, Request, Response } from "express";
 
 export class UrlController {
@@ -15,9 +16,9 @@ export class UrlController {
     );
   }
 
-  async CreateUrlController(req: Request, res: Response) {
+  async CreateUrlController(req: Request, res: Response): Promise<Response> {
     try {
-      const data = req.body;
+      const data: Url = req.body;
       const url = await this.urlService.CreateUrlService(data);
       return res.status(201).json(url);
     } catch (error) {
@@ -25,7 +26,7 @@ export class UrlController {
     }
   }
 
-  async GetUrlController(req: Request, res: Response) {
+  async GetUrlController(req: Request, res: Response): Promise<Response> {
     try {
       const { urlId } = req.params;
       const url = await this.urlService.GetUrlService(urlId);
@@ -35,7 +36,7 @@ export class UrlController {
     }
   }
 
-  async GetAllUrlsController(req: Request, res: Response) {
+  async GetAllUrlsController(req: Request, res: Response): Promise<Response> {
     try {
       const urls = await this.urlService.GetAllUrlsService();
       return res.status(200).json(urls);
@@ -44,17 +45,18 @@ export class UrlController {
     }
   }
 
-  async EditUrlController(req: Request, res: Response) {
+  async EditUrlController(req: Request, res: Response): Promise<Response> {
     try {
       const { urlId } = req.params;
-      const data = req.body;
+      const data: Partial<Url> = req.body;
       const url = await this.urlService.EditUrlService(urlId, data);
       return res.status(200).json(url);
     } catch (error) {
       return res.status(501).json({ message: error });
     }
   }
-  async DeleteUrlController(req: Request, res: Response) {
+
+  async DeleteUrlController(req: Request, res: Response): Promise<Response> {
     try {
       const { urlId } = req.params;
       const url = await this.urlService.DeleteUrlService(urlId);
